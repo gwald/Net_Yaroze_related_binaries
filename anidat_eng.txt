@@ -1,0 +1,292 @@
+AnimationDataMaker ver.1.2 .1
+SEE HTML FILE IN ZIP FILE!
+
+
+Copyright(C) 2000 K'sSoft (Kensaku Fujita)
+
+Email: fkensaku@fhe.freeserve.ne.jp
+
+HomePage: http://www.geocities.co.jp/SiliconValley-PaloAlto/5438
+
+Contents
+
+1. Overview
+
+2. Installation/Uninstallation
+
+3. Operating Environment
+
+4. Screen Configuration
+
+5. Menus
+
+6. Basic Operations
+
+7. File Format
+
+8. History
+
+9. Copyright, License
+
+Overview
+
+AnimationDataMaker was created for the purpose of creating animation data for characters and other items used in developing PlayStation game software. Although it was created for PlayStation, it can also be used with DirectX.
+
+It reads the data created in the game and the images used for animation and runs them according to the program.
+
+By using this, you can eliminate the trouble of having to manually create data, for example when creating an animation of a character running.
+
+[Back]
+
+Installation/Uninstallation
+
+There is nothing special.
+If you want to uninstall, please delete the entire folder.
+
+[Back]
+
+Operating environment
+
+Windows operating environment
+DirectX
+Internet Explorer 5.0 (will work without it, but some functions will be limited)
+16-bit color (high color) or higher resolution
+
+[Back]
+
+Screen configuration
+
+Image window
+This is the window that displays the image used in the animation.
+Select a rectangular area in this window to set it as a frame.
+
+Pattern window
+Displays the frame data set in the pattern.
+Right-click to display a pop-up menu.
+
+Control view
+
+Transparent color: The checkbox on the left sets the enablement setting, and the button on the right changes it, but it is currently unavailable.
+Background color: Sets the background color of the pattern window. The button on the right Use the button to make changes.
+Playback settings: Set the playback settings. The ■ button is pressed while editing.
+
+Management view
+
+You can change patterns and frames by dragging and dropping.
+
+[Back]
+
+About the menu
+
+Main window menu
+-File: [New] [Open] [Save as] [Save over] [Exit]
+-Edit: [Cut] [Copy] [Paste] [Delete] [Edit label] [Add pattern] [Add frame] [Drawing environment settings]
+-Display: [Image window]
+-Window: [Overlay] [Tile] [Close all]
+-Help: [Version information]
+
+Image window menu
+-Magnification ratio
+-Frame set
+-Grid settings
+
+Pattern window menu
+-Magnification Rate
+
+[Back]
+
+[New]
+Edit new animation data.
+Supported image data are .BMP or .TIM format files.
+
+[Back]
+
+[Open]
+Open an .ADP or .SAP file and start editing.
+For .SPA files, there is no editing information, so the application will create it automatically.
+
+[Back]
+
+[Save as] [Save overwrite]
+Save the data being edited to an .ADP or .SAP file.
+
+[Back]
+
+[Cut] [Copy] [Paste] [Delete]
+The well-known cut and paste.
+[Cut] [Copy] [Delete] processes the selected pattern or frame according to its respective function.
+Paste inserts the copied data at the end of the pattern or frame.
+
+[Back]
+
+[Edit Label]
+Change the label name of the selected pattern or frame.
+
+[Back]
+
+[Add Pattern][Add Frame]
+Add a pattern or frame to the end.
+
+[Back]
+
+[Drawing Environment Settings]
+Set the texture page information, CLUT (palette), and semi-transparency rate.
+
+[Back]
+
+[Image Window]
+Displays the image for editing.
+
+[Back]
+
+[Overlay][Tiles][Close All]
+Operate the pattern window.
+
+[Back]
+
+Magnification
+Change the magnification of the pattern or image display.
+
+[Back]
+
+Frame Set
+Set data for the selected frame.
+
+[Back]
+
+Grid Settings
+Set the grid display settings for the image window.
+
+[Back]
+
+Basic Operations
+
+1. Open the image to be used with [New]. The image is a .BMP or .TIM file.
+2. Create a pattern and frame with [Add Pattern].
+3. Select a frame in the management view or control view.
+4. Select a rectangular area to be used for the frame in the image window, and set the data for the frame with [Frame Set].
+5. Repeat steps 2 to 4, and when you have created all the data, click the play button to check and set the frame timing.
+
+[Back]
+
+File format
+
+When you save, two files will be created: an .ADP file and a .SPA file. These two files make up one set.
+
+.ADP file
+Information for editing is stored. You can delete it if you do not need to edit it.
+
+.SPA file
+This is the data group actually used in the animation. Details are shown below.
+
+*u_long = unsigned long
+u_short = unsigned short
+u_char = unsigned char
+
+File structure
+
+Setting information 12 bytes
+Pattern information Any byte
+Frame information Any byte
+Setting information
+
+GPU command for primitive drawing settings
+(For texture page settings) tpage struct SPA_HEADER
+{
+u_long tpage;
+u_long speed;
+u_long n_ptn;
+};
+Animation
+Movement control speed
+(Adjusts overall speed) speed
+Number of patterns n_ptn
+Pattern information
+It has information for the number of patterns indicated in the setting information.
+
+Number of bytes from the beginning of the frame information bnum struct SPA_PATTERN
+{
+u_long bnum;
+u_long n_frm;
+u_short w,h;
+};
+Number of frames n_frm
+Base frame size w,h
+
+4Byte Pattern number
+bnum 1
+n_frm
+h w
+bnum 2
+n_frm
+h w
+:
+:
+bnum n
+n_frm
+h w
+
+Frame information
+It has information for the number of frames indicated by the pattern information, and this data group exists for the number of patterns.
+
+Relative coordinates from the base frame x,y struct SPA_FRAME
+{
+u_char x,y;
+u_short timing;
+u_char u,v;
+u_short clut;
+u_short w,h;
+};
+Timing until the next frame timing
+Texture page coordinates u,v
+CLUT (palette) information clut
+Frame size w,h
+
+31-24bit 23-16bit 15-8bit 7-0bit Frame number Pattern number
+timing y x 1 1
+clut v u
+h w
+timing y x 2
+clut v u
+h w
+:
+:
+timing y x n
+clut v u
+h w
+:
+:
+timing y x 1 n
+clut y u
+h w
+timing y x 2
+clut v u
+h w
+:
+:
+timing y x n
+clut v u
+h w
+[Back]
+
+History
+
+・2000/ 6/30 First edition
+・2000/ 7/4 TIM images can now be used.
+
+Now only .SPA files can be read/written.
+・2000/ 7/14 Added drawing environment settings.
+・2000/10/ 3. Fix frameset not working properly.
+
+[Back]
+
+Copyright, license
+
+- This software is free software.
+- Copyright belongs to K'sSoft.
+- We are not responsible for any malfunctions. Use at your own risk.
+- Please do not distribute or reprint without permission. If you wish to distribute or reprint, please email us.
+- Please do not use for commercial purposes.
+- Please email us with any requests, comments, bugs, etc.
+
+[Back]

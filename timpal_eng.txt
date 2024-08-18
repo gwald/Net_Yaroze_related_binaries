@@ -1,0 +1,42 @@
+TIM Palette Utility Ver2.0(for WIN95/NT)
+
+The TIM palette utility is used to extract palette information from TIM files.
+This is a utility for manipulating and saving.
+From version 2.0, 8 bits (256 colors) are supported.
+
+Basic usage:
+・Click the Load button to load the TIM file.
+　Once loading is complete, the palette information will be displayed.
+・Select the palette number you want to change (it will be highlighted).
+・Select the color number you want to change (it will be highlighted).
+Correct the color information.
+　You can specify semi-transparency for each RGB value and "color number."
+　All of the palettes specified by the "All ON" and "All OFF" buttons
+　You can turn semi-transparent settings for colors on or off.
+・When you have finished making changes, save them by clicking the Export button.
+　(Please specify a file name. You cannot export with the same file name.)
+
+Non-basic usage:
+- Multiple palettes can be set by clicking the "Add" button below the palette number.
+　Simply click the Add button and the created palette will have 16 basic colors.
+　will be specified.
+- To delete one palette, highlight the palette you want to delete and click the Delete button.
+　Please press .
+- The "Load Palette" button under the color number allows you to load palette information.
+　can.
+　Once the palette has finished loading, it will be added.
+　The palette file formats that can be loaded are "JASC PLETTE" and "Microsoft PALETTE".
+　(Compatible with Paint Shop & Paintbrush).
+- Use "Export Palette" to save the modified palette (*.PAL).
+　The above two formats are supported.
+
+There is no TIM display function, so you can use the TIM utility or each drawing tool.
+It is effective when used in combination.
+
+Please use this program within the scope of "Let's Use the Internet."
+Reproduction and distribution is prohibited.
+
+--
+Team Ginga SPIRIT(1997.2.3)
+GALAXY (Yasuhiro Kikuchi)
+E-MAIL galaxy@shizuokanet.or.jp

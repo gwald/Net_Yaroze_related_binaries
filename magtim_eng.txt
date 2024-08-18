@@ -1,0 +1,76 @@
+16-color MAG, BMP, Pi -> TIM conversion tool "MAGTIM.EXE"
+'96/09/05
+
+====[ What is MagTim ]=====================================================
+Converts 16-color MAG image files to PlayStation TIM
+A tool for MS-DOS. Compatible with PC98 and DOS/V.
+
+As an added feature, it can also convert 16-color BMP and Pi.
+As an added feature, it can also be used as an image loader.
+
+====[ Restrictions ]=============================================================
+Only handles 16-color images. You can't use more than 256 colors!
+
+(What a 98-like tool...)
+
+====[How to use]====================================================
+
+Enter > magtim *.mag
+
+at the DOS prompt.
+
+The output file will be generated with the extension .mag changed to .tim.
+
+(You cannot specify the output file name, sorry...)
+
+If the input file name has an extension of .BMP or .Pi, it will be converted to a BMP file or a Pi file, respectively.
+
+If you specify *.TIM as the input file,
+
+it will act as a TIM loader and display the contents on the screen.
+
+This is a useful function for checking the results of the conversion.
+
+====[Options]================================================
+
+/r --- Specify the conversion range
+
+/r (0,0) Base 256x256 size
+
+/rX,Y (X,Y) Base 256x256 size
+
+/rX,Y,W,H (X,Y) Base W x H size
+
+/b --- Specify the position on the frame buffer of the output TIM.
+
+The position is fixed to the following four positions. The default is /b0.
+/b0 Image = 768, 0 CLUT = 0,480
+
+/b1 Image = 768,256 CLUT = 0,496
+
+/b2 Image = 512, 0 CLUT = 256,480
+
+/b3 Image = 512,256 CLUT = 256,496
+
+/t --- Translucent bit ON
+
+Sets the translucent bit (bi15) of the color registered in the CLUT to 1.
+
+/d --- Bonus function, works as an image loader.
+
+> magim -d *.mag
+
+If you enter this, the file contents will be displayed on the screen instead of converting it. (This is a MAG/BMP/Pi loader)
+
+====[Author's comment]===============================================
+There must be quite a few assets from the 16-color era!
+
+I still use Mappe...
+
+It's a modest tool, but I hope you'll give it a try.
+
+Tatsuo Nalanishi (Net Yaroze!)
+
+nakanita@ka2.so-net.or.jp
+
+====[END]=============================================================

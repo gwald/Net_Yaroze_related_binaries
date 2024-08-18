@@ -1,0 +1,59 @@
+================================================== ==========
+[Name] RsdPack
+[Registered name] RsdPack ver.1.0
+[Creator name] Kensaku Fujita (fkensaku@fhe.freeserve.ne.jp)
+[Operating environment] Windows
+[Release date] 2000/7/16
+[Creation method] LZH self-extracting archive
+[Type] Application
+================================================== ==========
+【 overview 】
+　- RSD file, which is 3D object data for PlayStation artists
+　　Combines overlapping parts of vertex and normal data into one.
+　-If there are overlapping parts, the data will expand.
+　　It is also used to eliminate this.
+　- Supports long file names.
+
+[How to use]
+　・RsdPack [options] Input file name
+　　　[option]
+　　　　-cv :
+　　　　　- Only duplicate vertex data is merged.
+　　　　-cn :
+　　　　　- Only duplicate normal data will be merged.
+　　　　-f <filename> :
+　　　　　・Specify the output file name.
+　　　　　- The default output file name is <a.rsd>.
+　　　　-p :
+　　　　　- Only PLY files are output.
+　　　　　If you specify <-f>, enter the RSD file name as the output file name.
+　　　　　・The input file can be overwritten only when this option is specified.
+　　　*Please enter the input and output file names including the extensions.
+　・Example ①RsdPack test.rsd
+　　　　　　Vertices and normals are combined and output as <a.rsd><a.ply><a.mat><a.grp>.
+　　　　②RsdPack -f b.rsd test.rsd
+　　　　　　Vertices and normals are combined and output as <b.rsd><b.ply><b.mat><b.grp>.
+　　　　③RsdPack -p -f b.rsd test.rsd
+　　　　　　Vertices and normals are combined and output as <b.ply>.
+　　　　④RsdPack -cv test.rsd
+　　　　　　The vertices are collected and output as <a.rsd><a.ply><a.mat><a.grp>.
+　　　　⑤RsdPack -cn test.rsd
+　　　　　　The normals are collected and output as <a.rsd><a.ply><a.mat><a.grp>.
+
+[Issues]
+　I haven't done much debugging so there may be some strange parts.
+
+【history】
+　2000/7/16: First distribution
+
+【others】
+　・Copyright belongs to Kensaku Fujita.
+　- We are not responsible for any malfunctions that may occur.
+　　Use at your own risk.
+　・Please do not reproduce without permission.
+　　If you would like to reprint, please email me.
+　・Please do not use for commercial purposes.
+　If you have any requests or comments, please email us.
+　　I'd like to respond to as many requests as possible.
+　　　　mail to: fkensaku@fhe.freeserve.ne.jp
+================================================== ==========

@@ -1,0 +1,261 @@
+TMD_Diff ver.1.0 .0.4　
+
+SEE HTML FILE IN ZIP FILE!
+
+
+
+Copyright(C) 2000 K's Soft (Kensaku Fujita)　　　　　　　　　　
+E_mail: fkensaku@fhe.freeserve.ne.jp HomePage: http://www.geocities.co.jp/SiliconValley-PaloAlto/5438　　　　　　　　　　　　　
+
+Table of Contents 1. Overview 2. Installation/Uninstallation 3. Operating Environment 4. Operation 5. About TMD files 6. File format 7. History 8. Copyright, License
+
+
+
+
+
+
+
+
+
+
+OverviewTMD_Diff
+
+is a tool that creates differential data for vertices, normals, primitive colors, CLUT, texture pages, and texture UV coordinates.
+I think that this data can be used in the following ways:
+　Vertices and normals: 3D model motionPrimitive
+　colors: Color changeCLUT
+　and texture pages: Texture animation by changing CLUT and texture pagesTexture
+　UV coordinates: Texture animation within the same texture page
+By combining these usage methods, I think that you can do a lot of things.
+At the moment, it is only a tool, but I plan to release a library in the future.
+
+[ return ]
+
+Installation/Uninstallation
+
+There is nothing special.
+If you want to uninstall, just delete the folder.
+
+[ return ]
+
+Operating Environment
+
+This software is a Win32 console application.
+
+[ return ]
+
+Operation
+
+
+buttons:
+　　[Add]: Adds a TMD file.
+　　　　　　　　　 The first file will be the key frame (Koro1.tmd in the image above).
+　　[Delete]: Deletes the selected TMD file.
+　　[Delete All]: Deletes all TMD files from the TMD file list.
+　　 [...]: Specifies the output file.
+　　[Reset]: Resets all TMD files and generation options.
+　　[Open List]: Reads the contents of all TMD files and generation options from a file.
+　　[Save List]: Saves the contents of all TMD files and generation options to a file.
+　　[Generate]: Generates difference data set in the generation options.
+　　[Exit]: Exits TMD_Diff.
+
+TMD file information:
+　　[File size]: Displays the size of the TMD file.
+　　[Number of objects]: Displays the number of objects in the TMD file.
+　　[Object No.]: The object number for which the [Object Information] is displayed.Object Information: 　　[Vertex Count]: Displays the number of vertices in the object. 　　[Normal Count]: Displays the number of normals in the object. 　　[Primitive Count]: Displays the number of textured primitives in the object.　　[Scaling Factor]: Displays the object scaling.Generation Options: 　　[RGB]: Specifies the generation of differential (copy) data for primitive colors. 　　[CLUT/T Page]: Specifies the generation of differential (copy) data for CLUT/texture page information for textured primitives. 　　[UV Coordinate]: Specifies the generation of differential data for UV coordinates for textured primitives. [ 　　Vertex]: Specifies the generation of vertex differential data. 　　[Normal]: Specifies the generation of normal differential data.
+
+
+
+
+
+
+
+
+
+
+
+
+
+[ return ]
+
+About TMD files
+
+TMD files must conform to the following constraints.
+　・The following contents of the key and difference files must be the same.
+　　　・File size
+　　　・Number of objects・ 　　　Total number of
+　　　vertices・ 　　　normals・Total number of primitives 　　　・Total number of scaling additions 　・Only one motion data 　　can be included in one file (for example, a still motion in FILE1 and a moving motion in FILE2). 　　In other words, one file cannot contain multiple motions or other unrelated objects. 　・The total number of primitives, vertices and normals in one file
+
+
+
+
+
+
+a maximum of 65535.
+
+[ return ]
+
+File Format
+
+List File The
+　list file is a file written in text.
+　The format is written as [tag:value], and there are the following.
+　　 [OPTION:OPT_RGB,OPT_CTD,OPT_UV,OPT_VTX,OPT_NML]:
+　　　OPT_RGB: Creates primitive color difference data
+　　　 OPT_CTD: Creates CLUT and texture page information difference data
+　　　 OPT_UV: Creates UV coordinate difference data
+　　　 OPT_VTX: Creates vertex difference data
+　　　 OPT_NML: Creates normal difference data
+　　 [TMD:TMD_FILE]:
+　　　TMD_FILE: TMD file
+　　 [MDF:MDF_FILE]:
+　　　MDF_FILE: Output difference data file
+
+Difference Data
+Format 　There are three types of difference data.
+　　 [.VDF]: Vertex difference data file
+　　 [.NDF]: Normal difference data file
+　　 [.TDF]: Texture UV difference data file
+　The data formats are basically the same.
+
+format
+Data Column	byte	Data details
+File Header	16	
+struct HEADER
+{
+　u_short flg;
+　u_short n_mot;
+　u_short n_rgb;
+　u_short n_tex;
+　u_short n_vtx;
+　u_short n_nml;
+　u_long dif_size;
+　u_long prm_size;
+};	flg	Differential data configuration flag
+15～11
+
+10	9	8	7～4	3	2	1	0
+0	NML	VTX	RGB	0	UV	CTD	0	0
+0:
+
+No difference	
+1:
+
+There is a difference
+CDT:	CLUT/Texture page differences
+UV:	UV Difference
+RGB:	Color Difference
+VTX:	Vertex Difference
+NML:	Normal Difference
+n_mot	Number of motions (number of differential data arrays)
+n_rgb	Color difference data number
+n_tex	Number of texture difference data
+n_vtx	Number of vertex difference data (total number of vertices)
+n_nml	Number of normal difference data (total number of normals)
+dif_size	Size of the differential data
+*Each differential data number will be written regardless of whether it exists or not.
+
+Key Data	key_size	Copy the TMD file of the keyframe.
+* Change the HEADER part of the TMD file as follows.
+struct TMD_HEADER
+{
+　u_long ID;
+　u_long flag;
+　u_long n_obj;
+};	⇒	struct TMD_HEADER
+{
+　u_long key_size;
+　u_short flag;
+　u_short n_prm;
+　u_long n_obj;
+};	key_size	Key data size
+n_prm	Total number of primitives
+Differential data[n_mot]	dif_size
+×
+n_mot	
+Differential Data Structure	
+Data Structure
+
+Color
+difference data	MDF_RGB
+[n_rgb]	
+Color Difference Data Structure
+struct MDF_RGB
+{
+　u_char r,g,b;
+　u_char mode;
+};	r	red
+g	green
+b	Blue
+mode	Mode Number
+Texture
+difference data	MDF_TEX
+[n_tex]	
+Texture Difference Data Structure
+tex_flg	　
+　	struct MDF_TEX
+{
+CTD	　[CLUT_TP ctd;]
+UV	　[UV uv[4];]
+　	};
+*1: The variables in [] 　　are added when each value of tex_flg is 1. *2: This data is actually 　　a copy of the difference file.
+
+
+
+clut	CLUT/Texture page information
+struct CTD
+{
+　u_short clut;
+　u_short tpage;
+};	clut	CLUT information
+tpage	Texture
+Page Information
+tpage	information
+uv	Texture coordinates
+struct UV
+{
+　u_char u,v;
+};	u	Texture
+U coordinate
+v	Texture
+V coordinate
+Vertex
+difference data	MDF_VECT
+[n_vtx]	
+Vertex/normal difference data structure (=SVECTOR)
+struct MDF_VECT
+{
+　short vx;
+　short vy;
+　short vz;
+　short pad;
+};	vx	X component
+vy	Y component
+vz	Z component
+pad	Padding
+Normal
+difference data	MDF_VECT
+[n_nml]
+[ return ]
+
+History
+
+・2000/ 9/27 First edition
+・2000/ 9/28 Error output correction
+・2000/10/ 1 File format and some specifications changed
+・2000/10/ 5 File format and error output correction
+
+[ return ]
+
+Copyright, License Permission
+
+- This software is free software.
+- Copyright and ownership are the property of K's Soft <Kensaku Fujita>.
+- We cannot be held responsible for any malfunctions that may occur. Please use at your own risk.
+- Do not distribute or reproduce without permission. If you wish to distribute or reproduce, please email us.
+- Do not use for commercial purposes.
+- If you have any requests, comments, bugs, etc., please email us.
+
+[ return ]
+
+　

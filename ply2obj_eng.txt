@@ -1,0 +1,47 @@
+================================================== ==========
+【Name】 Ply2Obj
+[Registered name] Ply2Obj ver.1.0
+[Creator name] Kensaku Fujita (fkensaku@fhe.freeserve.ne.jp)
+[Operating environment] Windows
+[Release date] 2000/8/18
+[Creation method] LZH self-extracting archive
+[Type] Application
+================================================== ==========
+【 overview 】
+　- Primitive information of TMD file of object data for programmers
+　　Convert to individual objects.
+　　For example, if there are 10 primitives, for each primitive
+　　An object is formed.
+　Basically, only the object data is changed, and the primitives, vertices, and normals are changed.
+　　The data is output as is.
+　　For this reason, it is not suitable for programs that perform transformations on the model.
+　・This is useful when you want to do something on a polygon-by-polygon basis.
+
+[How to use]
+　・Ply2Obj [options] TMD file name
+　　　[option]
+　　　　-f <filename> :
+　　　　　・Specify the output file name.
+　　　　　- The default output file name is <a.tmd>.
+　　　*Please enter the file name including the extension.
+
+[Issues]
+　・I don't know.
+
+[Future Plans]
+　I'll update it if any problems arise.
+
+【history】
+　2000/8/18: First distribution
+
+【others】
+　・Copyright and ownership are owned by Kensaku Fujita.
+　- We are not responsible for any malfunctions that may occur.
+　　Use at your own risk.
+　・Please do not reproduce without permission.
+　　If you would like to reprint, please email me.
+　・Please do not use for commercial purposes.
+　If you have any requests or comments, please email us.
+　　I'd like to respond to as many requests as possible.
+　　　　mail to: fkensaku@fhe.freeserve.ne.jp
+================================================== ==========
