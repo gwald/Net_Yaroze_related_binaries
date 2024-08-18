@@ -1,3 +1,5 @@
+Note: This app converts a TMD (with a single object - a 3D model) into a TMD with each face as an individual object.
+
 ================================================== ==========
 【Name】 Ply2Obj
 [Registered name] Ply2Obj ver.1.0
