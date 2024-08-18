@@ -1,0 +1,16 @@
+tim2txt.exe ver2.4 INSTAIL
+Drag and drop the Tim file.
+
+Press the return key to exit.
+
+
+Creates a header file (.h) from the .tim file, that looks like this:
+
+//dx=640,dy=256,w=256,h=1;
+static u_long new0_clut[]={
+... data ...
+}	
+	//dx=640,dy=0,w=128,h=256;
+static u_long new0_image[]={
+... data ...
+}
